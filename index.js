@@ -1,11 +1,10 @@
-const http = require("http");
+const express = require("express");
+const app = express(); //obtiene el objeto express
 
-const server = http.createServer((req, res) => {
-  res.status = 200;
-  res.setHeader("Content-Type", "text/plain");
-  res.end("Hello World");
-});
+app.get("/", (require, res) => {
+  res.send("Hello World"); //responde la petición
+}); //recibe una peticion HTTP(get) y realiza algo
 
-server.listen(3000, () => {
+app.listen(3000, () => {
   console.log("Serve on port 3000");
-});
+}); //levantar el servicio
