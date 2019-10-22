@@ -5,6 +5,7 @@ const app = express(); //obtiene el objeto express
 // Settings
 app.set('appName', 'Fazt express Tutorial');
 app.set('port', 3000);
+app.set('view engine', 'ejs');
 
 // Middlewares
 /**
@@ -19,6 +20,11 @@ app.use(morgan('dev'));
 //   console.log("Por aqui paso");
 //   next();
 // }); // método express encargado de que pasen toda las rutas al (/user)
+
+app.get('/', (req, res) => {
+  const data = [{ name: 'John' }, { name: 'Joe' }, { name: 'Cameron' }, { name: 'Ryan' }]
+  res.render('index.ejs', { people: data })
+}); // Renderiza la pantalla index.ejs tambien envia datos
 
 app.get("/user", (req, res) => {
   res.json({
