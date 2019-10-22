@@ -1,20 +1,13 @@
 const express = require("express");
+var morgan = require('morgan')
 const app = express(); //obtiene el objeto express
-
-function logger(req, res, next) {
-  console.log(`Router Received: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
-  next();
-}
 
 // Middlewares
 /**
  * Procesa datos antes de llegar a las rutas
  */
 app.use(express.json()); // linea de código encargado de hacer conocer el formato JSON
-app.use(logger);
-
-
-
+app.use(morgan('dev'));
 
 // app.all("/user", (req, res, next) => {
 //   console.log("Por aqui paso");
@@ -44,6 +37,8 @@ app.put("/user/:userId", (req, res) => {
 app.delete("/user/:id", (req, res) => {
   res.send(`User ${req.params.id} deleted`); //responde la petición
 });
+
+app.use(express.static('public')); // Se ejecuta el middlewares si no entra a las turas
 
 app.listen(5000, () => {
   console.log("Serve on port 5000");
