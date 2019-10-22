@@ -1,12 +1,25 @@
 const express = require("express");
 const app = express(); //obtiene el objeto express
 
-app.use(express.json()); // linea de código encargado de hacer conocer el formato JSON
-
-app.all("/user", (req, res, next) => {
-  console.log("Por aqui paso");
+function logger(req, res, next) {
+  console.log(`Router Received: ${req.protocol}://${req.get('host')}${req.originalUrl}`);
   next();
-}); // método express encargado de pasen toda las ruras (/user)
+}
+
+// Middlewares
+/**
+ * Procesa datos antes de llegar a las rutas
+ */
+app.use(express.json()); // linea de código encargado de hacer conocer el formato JSON
+app.use(logger);
+
+
+
+
+// app.all("/user", (req, res, next) => {
+//   console.log("Por aqui paso");
+//   next();
+// }); // método express encargado de que pasen toda las rutas al (/user)
 
 app.get("/user", (req, res) => {
   res.json({
