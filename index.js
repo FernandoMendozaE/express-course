@@ -2,12 +2,18 @@ const express = require("express");
 var morgan = require('morgan')
 const app = express(); //obtiene el objeto express
 
+// Settings
+app.set('appName', 'Fazt express Tutorial');
+app.set('port', 3000);
+
 // Middlewares
 /**
  * Procesa datos antes de llegar a las rutas
  */
 app.use(express.json()); // linea de código encargado de hacer conocer el formato JSON
 app.use(morgan('dev'));
+
+// Routes
 
 // app.all("/user", (req, res, next) => {
 //   console.log("Por aqui paso");
@@ -40,6 +46,7 @@ app.delete("/user/:id", (req, res) => {
 
 app.use(express.static('public')); // Se ejecuta el middlewares si no entra a las turas
 
-app.listen(5000, () => {
-  console.log("Serve on port 5000");
+app.listen(app.get('port'), () => {
+  console.log(app.get('appName'));
+  console.log("Serve on port", app.get('port'));
 }); //levantar el servicio
